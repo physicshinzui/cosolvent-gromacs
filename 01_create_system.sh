@@ -62,8 +62,7 @@ gmx insert-molecules -f mol_solv.gro -ci ./box/noble/${tp}.pdb -nmol $nmol -repl
 
 ## Insert #include "noble_LJTS.itp" before the first [ moleculetype ] in system.top
 ## beacuse "*.itp" has to be placed before any moleculetype section.
-cp ../itp/noble_LJTS.itp noble_LJTS.itp
-sed -i '0,/\[ moleculetype \]/s/\[ moleculetype \]/#include "noble_LJTS.itp"\n\n&/' system.top
+sed -i '0,/\[ moleculetype \]/s/\[ moleculetype \]/#include "itp\/noble_LJTS.itp"\n\n&/' system.top
 
 ## Place the new number of water molecules
 new_nwat=`grep OW mol_solv.gro | wc -l`
