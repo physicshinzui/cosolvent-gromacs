@@ -24,7 +24,7 @@ sed -e "s!#{INPUT}!${PDB}!g" -e "s!#{FF}!${FF}!g" templates/template_tleap.in > 
 tleap -f tleap.in
 
 # Convert Amber topology and coordinate files to Gromacs ones.
-python amber2gmx.py system.prmtop system.inpcrd
+python scripts/amber2gmx.py system.prmtop system.inpcrd
 
 # NOTE:  ==============================================================================
 # Now we get a topology file and coordinate file of a protein, 
