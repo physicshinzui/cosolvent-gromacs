@@ -1,0 +1,59 @@
+[ atomtypes ]
+; name      at.num  mass     charge ptype  sigma      epsilon
+NE          10       20.180   0.0000  A   2.80000e-01  3.31165e-01
+AR          18       39.950   0.0000  A   3.39160e-01  1.14656e+00
+KR          36       83.798   0.0000  A   3.62330e-01  1.59239e+00
+XE          54      131.293   0.0000  A   3.94600e-01  2.28531e+00
+; Reference: https://doi.org/10.1080/00268976.2016.1246760
+;            Rutkai, G., Thol, M., Span, R. & Vrabec, J. How well does the Lennard-Jones potential represent the thermodynamic properties of noble gases? 
+;            Mol. Phys. (2017)
+; Note: In the article, the sigma value is given by the unit 'K' divided by the Boltzman factor,
+;       but in Gromacs, we needed to convert it into kJ/mol unit.
+;       Our epsilon value is obtained by 
+;           \epsilon/kb (from the article) * gas constant
+;       where the gas constant is 8.31446261815324 J K mol^-1
+
+; # Calculation log 
+; julia> 39.83 * 8.31446261815324
+; 331.1650460810435
+; 
+; julia> 137.9 * 8.31446261815324
+; 1146.5643950433318
+;
+; julia> 191.52 * 8.31446261815324
+; 1592.3858806287085
+;
+; julia> 274.86 * 8.31446261815324
+; 2285.3131952255994
+
+[ moleculetype ]
+; molname       nrexcl
+NE             1      
+
+[ atoms ]
+; id    at type         res nr  residu name     at name  cg nr  charge
+1       NE              1       NE              NE       1      0.00000
+
+[ moleculetype ]
+; molname       nrexcl
+AR             1
+
+[ atoms ]
+; id    at type         res nr  residu name     at name  cg nr  charge
+1       AR              1       AR              AR       1      0.00000
+
+[ moleculetype ]
+; molname       nrexcl
+KR             1
+
+[ atoms ]
+; id    at type         res nr  residu name     at name  cg nr  charge
+1       KR              1       KR              KR       1      0.00000
+
+[ moleculetype ]
+; molname       nrexcl
+XE             1
+
+[ atoms ]
+; id    at type         res nr  residu name     at name  cg nr  charge
+1       XE              1       XE              XE       1      0.00000

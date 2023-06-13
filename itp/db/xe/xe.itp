@@ -1,0 +1,11 @@
+[ atomtypes ]
+; name      at.num  mass     charge ptype  sigma      epsilon
+XE          54      131.293   0.0000  A   3.94600e-01  2.28531e+00
+
+[ moleculetype ]
+; molname       nrexcl
+XE             1
+
+[ atoms ]
+; id    at type         res nr  residu name     at name  cg nr  charge
+1       XE              1       XE              XE       1      0.00000
