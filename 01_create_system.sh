@@ -76,7 +76,7 @@ echo "${tp^^}          $nmol" >> system.top
 gmx grompp -f templates/ions.mdp -c mol_solv.gro -p system.top -o ions.tpr #-maxwarn 1
 echo SOL | gmx genion -s ions.tpr -o mol_solv_ions.gro -p system.top -pname Na+ -nname Cl- -neutral
 
-### Create index file and posres.itp for protein chains
+# Create posres.itp for protein chains and insert ifdef POSRE endif lines to the topology file.
 echo "Backbone" | gmx genrestr -f mol_solv_ions.gro -o posre.itp
 python scripts/insert_posre_itp.py system.top tmp
 mv tmp system.top
