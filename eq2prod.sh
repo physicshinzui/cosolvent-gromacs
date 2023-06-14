@@ -29,7 +29,7 @@ cat ./templates/nvt_eq.mdp | sed -e "s!#{RAND}!${RANDOM}!g" > nvt_eq_${id}.mdp
 ${GMX} grompp -f nvt_eq_${id}.mdp \
               -c em2.gro \
               -r em2.gro \
-              -p topol.top \
+              -p system.top \
               -po mdout_nvt_eq.mdp \
               -o nvt_eq_${id}.tpr
 ${GMX} mdrun -deffnm nvt_eq_${id} -ntomp $OMP_NUM_THREADS -ntmpi $NUM_MPI
@@ -39,7 +39,7 @@ cp ./templates/npt_eq.mdp npt_eq_${id}.mdp
 ${GMX} grompp -f npt_eq_${id}.mdp \
               -c nvt_eq_${id}.gro \
               -r nvt_eq_${id}.gro \
-              -p topol.top  \
+              -p system.top  \
               -po mdout_npt_eq.mdp \
               -o npt_eq_${id}.tpr -maxwarn 1 # if Gromacs says that Berendsen barostat does not guarantee canonical distribution, you should add this option. 
 ${GMX} mdrun -deffnm npt_eq_${id} -ntomp $OMP_NUM_THREADS -ntmpi $NUM_MPI
@@ -51,11 +51,11 @@ cp ./templates/npt_prod.mdp npt_prod_${id}.mdp
 $GMX grompp -f npt_prod_${id}.mdp  \
             -c npt_eq_${id}.gro    \
             -t npt_eq_${id}.cpt    \
-            -p topol.top           \
+            -p system.top           \
             -po mdout_npt_prod.mdp \
             -o npt_prod_${id}.tpr
 # - Starting coordinates can be read from trajectory with -t
 #   - Only if this information is absent will the coordinates in the -c file be used.
 
-$GMX mdrun -deffnm npt_prod_${id} -nsteps 500 -ntomp $OMP_NUM_THREADS -ntmpi $NUM_MPI
+$GMX mdrun -deffnm npt_prod_${id} -ntomp $OMP_NUM_THREADS -ntmpi $NUM_MPI
 #==============================================
