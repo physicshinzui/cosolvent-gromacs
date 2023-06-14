@@ -2,11 +2,11 @@ title      = NPT production
 
 ; Run parameters
 integrator = md  
-nsteps     = 5000     ; 2 * 50000 = 100 ps
+nsteps     = 250000000 ; 2 * 50000 = 100 ps
 dt         = 0.002     ; 0.002 = 2 fs
 
 ; Output control
-nstxout-compressed = 5000
+nstxout-compressed = 5000 ; every 10 ps
 compressed-x-grps  = System
 nstlog             = 5000
 
