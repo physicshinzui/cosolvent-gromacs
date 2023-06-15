@@ -17,7 +17,7 @@ EOF
 PDB=$1
 FF=ff14SB 
 tp=xe
-#nmol=10
+Mconc=0.1 # Molar [mol/L]
 
 # Create Amber topology and coordinate files
 sed -e "s!#{INPUT}!${PDB}!g" -e "s!#{FF}!${FF}!g" templates/template_tleap.in > tleap.in
@@ -57,7 +57,7 @@ gmx editconf -f protein.gro -o newbox.gro -bt dodecahedron -d 1.0
 gmx solvate -cp newbox.gro -cs spc216.gro -o mol_solv.gro -p system.top
 
 # Calculate system volume and the number of inserted molecules to reach a specific concentration
-nmol=`python scripts/volmol2num.py mol_solv.gro 0.1`
+nmol=`python scripts/volmol2num.py mol_solv.gro Mconc`
 
 #==============insert noble gas atoms and modify a system topology file========
 ## Insert noble gas atoms with which SOL is replaced. 
