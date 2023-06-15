@@ -61,4 +61,4 @@ $GMX mdrun -deffnm npt_prod_${id} -ntomp $OMP_NUM_THREADS -ntmpi $NUM_MPI
 #==============================================
 
 mkdir $id
-mv npt* nvt* $id
+mv npt* nvt* mdout_npt_prod.mdp $id
