@@ -18,8 +18,10 @@ tp=xe
 Mconc=0.1 # Molar [mol/L]
 
 # Create Amber topology and coordinate files
-pdb4amber -i $PDB -o p4a.pdb 
-# NOTE: pdb4amber detects SS bonds automatically, the info being placed at the bottom of p4a.pdb as CONECT lines.
+pdb4amber -i $PDB --noter --dry -o p4a.pdb 
+# NOTE: 
+# pdb4amber detects SS bonds automatically, the info being placed at the bottom of p4a.pdb as CONECT lines.
+# --noter and --dry are required to generate a PDB  
 
 sed -e "s!#{INPUT}!p4a.pdb!g" \
     -e "s!#{FF}!${FF}!g" templates/template_tleap.in > tleap.in
