@@ -57,7 +57,7 @@ gmx editconf -f protein.gro -o newbox.gro -bt dodecahedron -d 1.0
 gmx solvate -cp newbox.gro -cs spc216.gro -o mol_solv.gro -p system.top
 
 # Calculate system volume and the number of inserted molecules to reach a specific concentration
-nmol=`python scripts/volmol2num.py mol_solv.gro Mconc`
+nmol=`python scripts/volmol2num.py mol_solv.gro $Mconc`
 
 #==============insert noble gas atoms and modify a system topology file========
 ## Insert noble gas atoms with which SOL is replaced. 
