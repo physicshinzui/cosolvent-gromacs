@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#TODO: I wanna calculate Molar of noble gas automatially. 
-
 set -eu
 cat << EOF
 Usage: 
