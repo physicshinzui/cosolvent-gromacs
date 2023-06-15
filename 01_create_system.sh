@@ -18,7 +18,11 @@ tp=xe
 Mconc=0.1 # Molar [mol/L]
 
 # Create Amber topology and coordinate files
-sed -e "s!#{INPUT}!${PDB}!g" -e "s!#{FF}!${FF}!g" templates/template_tleap.in > tleap.in
+pdb4amber -i $PDB -o p4a.pdb 
+# NOTE: pdb4amber detects SS bonds automatically, the info being placed at the bottom of p4a.pdb as CONECT lines.
+
+sed -e "s!#{INPUT}!p4a.pdb!g" \
+    -e "s!#{FF}!${FF}!g" templates/template_tleap.in > tleap.in
 tleap -f tleap.in
 
 # Convert Amber topology and coordinate files to Gromacs ones.
