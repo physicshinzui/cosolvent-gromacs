@@ -20,7 +20,7 @@ export GMXLIB=$HOME/noble_gas/top
 #==============================
 
 set -eu
-id=xe
+# id=xe # id is specified by the option -v in `jsub -v id=[integer]`
 GMX="gmx"
 
 #================Equilibriation step==============
