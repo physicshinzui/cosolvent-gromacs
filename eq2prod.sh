@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -l select=1:ncpus=16:mpiprocs=2:ompthreads=2:ngpus=1
-#PBS -l walltime=00:30:00
+#PBS -l walltime=24:00:00
 
 #===========Preamble=============
 if [ ! -z "${PBS_O_WORKDIR}" ]; then
