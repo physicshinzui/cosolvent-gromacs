@@ -8,15 +8,19 @@ def count_nchains(pdbfilename):
     
 top = sys.argv[1]
 pdb = sys.argv[2]
+# PDB is used to count the number of chains
 
-# Insert ifdef lines before the 2nd moleculetype line.
-moleculetype_target_counter = count_nchains(pdb) + 1
+# Insert ifdef lines at the end of each moleculetype line.
+nchains = count_nchains(pdb)
+print(nchains)
 with open(top, 'r') as infile, open('tmp', 'w') as outfile:
-    count = 0
+    ichain = 0
     for line in infile:
         if '[ moleculetype' in line:
-            count += 1
-            if count == moleculetype_target_counter:
-                outfile.write('#ifdef POSRES\n#include "posre.itp"\n#endif\n\n')
+            if ichain == 0:
+                ichain += 1
+            elif ichain <= nchains:
+                outfile.write(f"#ifdef POSRES\n#include \"posre{ichain}.itp\"\n#endif\n\n")
+                ichain += 1
         outfile.write(line)
 shutil.move('tmp', top)
