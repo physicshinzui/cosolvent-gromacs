@@ -33,7 +33,7 @@ for model in structure:
 print("atom ranges for each chain", atom_ranges)
 
 # generate an index.ndx with the atom selections for each chain
-selections = "\n".join(atom_ranges) #+ "\nq"
+selections = " & \"Backbone\"\n".join(atom_ranges) + " & \"Backbone\"\n"
 print(selections)
 command = f"""
 gmx make_ndx -f {pdb} <<EOF
@@ -50,4 +50,3 @@ with open("index.ndx", 'r') as fin, open("rename_index.ndx", 'w') as fout:
         content = content.replace(r.replace(' ', '_'), f"chain{ichain}")
     fout.write(content)
 os.system("mv rename_index.ndx index.ndx")
-
