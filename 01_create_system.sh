@@ -102,13 +102,12 @@ python scripts/make_chain_index.py protein.pdb
 nchains=`grep chain index.ndx | wc -l`
 for i in $(seq 0 $(($nchains - 1))); do
     # NOTE: "chain$i & Backbone" does not work correctly! It generates posres.itp for all the atoms of chain$i 
-    echo "Backbone & chain$i" | gmx genrestr -f mol_solv_ions.gro -n index.ndx -o posre_$i.itp
+    echo "chain${i}_&_Backbone" | gmx genrestr -f mol_solv_ions.gro -n index.ndx -o posre$i.itp
 done
 
 python scripts/insert_posre_itp.py system.top p4a.pdb 
 # ^ from p4a.pdb, nchains were calculated, so that where to put posre.itp ifdef lines can be inferred. 
 
-exit
 # 
 echo "Energy minimisation 1 ..."
 gmx grompp -f ./templates/em1.mdp \
