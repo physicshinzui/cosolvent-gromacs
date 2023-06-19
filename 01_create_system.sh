@@ -18,11 +18,20 @@ tp=xe
 Mconc=0.1 # Molar [mol/L]
 
 # Create Amber topology and coordinate files
+
 pdb4amber -i $PDB --noter --dry -o p4a.pdb 
 # NOTE: 
 # pdb4amber detects SS bonds automatically, the info being placed at the bottom of p4a.pdb as CONECT lines.
 # --noter and --dry are required to generate a PDB  
 
+# Remove the chain ids from p4a.pdb. 
+#python scripts/remove_chainid.py p4a.pdb tmp && mv tmp p4a.pdb
+# NOTE: Removing chain ids did not work so that multi-chain protein's topology is merged into one in system.top 
+#       i.e., By default, if a PDB contains multichains, system.top contains these lines: system1, system2, ...;
+#       this hinders me from putting posre.itp to appropriate locations in the topology file. 
+#       BUT, I DECIDED NOT TO REMOVE THE CHAIN IDS. 
+
+# Make an Amber topology
 sed -e "s!#{INPUT}!p4a.pdb!g" \
     -e "s!#{FF}!${FF}!g" templates/template_tleap.in > tleap.in
 tleap -f tleap.in
@@ -83,11 +92,19 @@ echo "${tp^^}          $nmol" >> system.top
 gmx grompp -f templates/ions.mdp -c mol_solv.gro -p system.top -o ions.tpr #-maxwarn 1
 echo SOL | gmx genion -s ions.tpr -o mol_solv_ions.gro -p system.top -pname Na+ -nname Cl- -neutral
 
-# Create posres.itp for protein chains and insert ifdef POSRE endif lines to the topology file.
-echo "Backbone" | gmx genrestr -f mol_solv_ions.gro -o posre.itp
-python scripts/insert_posre_itp.py system.top tmp
-mv tmp system.top
+# Create posres.itp for protein chains and insert `ifdef POSRE endif` lines to the topology file.
 
+# Get amino acid ids for each chain and make an index.ndx, 
+# because each chain is supposed to be positionally restrained individually. 
+gmx trjconv -f mol_solv_ions.gro -s ions.tpr -o protein.pdb
+python scripts/get_atomids_for_each_chain.py protein.pdb
+
+
+echo "Backbone" | gmx genrestr -f mol_solv_ions.gro -o posre.itp
+python scripts/insert_posre_itp.py system.top p4a.pdb 
+# ^ from p4a.pdb, nchains were calculated, so that where to put posre.itp ifdef lines can be inferred. 
+
+# 
 echo "Energy minimisation 1 ..."
 gmx grompp -f ./templates/em1.mdp \
               -c mol_solv_ions.gro \
