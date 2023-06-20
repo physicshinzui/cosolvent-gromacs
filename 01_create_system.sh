@@ -103,6 +103,10 @@ nchains=`grep chain index.ndx | wc -l`
 for i in $(seq 0 $(($nchains - 1))); do
     # NOTE: "chain$i & Backbone" does not work correctly! It generates posres.itp for all the atoms of chain$i 
     echo "chain${i}_&_Backbone" | gmx genrestr -f mol_solv_ions.gro -n index.ndx -o posre$i.itp
+
+    python scripts/renumber.py posre$i.itp tmp # Renumber atom ids in each chain's posre.itp
+    cp posre$i.itp bk_posre$i.itp
+    mv tmp posre$i.itp
 done
 
 python scripts/insert_posre_itp.py system.top p4a.pdb 
