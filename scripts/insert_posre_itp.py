@@ -20,7 +20,7 @@ with open(top, 'r') as infile, open('tmp', 'w') as outfile:
             if ichain == 0:
                 ichain += 1
             elif ichain <= nchains:
-                outfile.write(f"#ifdef POSRES\n#include \"posre{ichain}.itp\"\n#endif\n\n")
+                outfile.write(f"#ifdef POSRES\n#include \"posre{ichain - 1}.itp\"\n#endif\n\n")
                 ichain += 1
         outfile.write(line)
 shutil.move('tmp', top)
