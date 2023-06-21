@@ -26,12 +26,6 @@ pdb4amber -i assigned_his.pdb --noter --dry -o p4a.pdb
 # pdb4amber detects SS bonds automatically, the info being placed at the bottom of p4a.pdb as CONECT lines.
 # --noter and --dry are required to generate a PDB  
 
-# Remove the chain ids from p4a.pdb. 
-#python scripts/remove_chainid.py p4a.pdb tmp && mv tmp p4a.pdb
-# NOTE: Removing chain ids did not work so that multi-chain protein's topology is merged into one in system.top 
-#       i.e., By default, if a PDB contains multichains, system.top contains these lines: system1, system2, ...;
-#       this hinders me from putting posre.itp to appropriate locations in the topology file. 
-#       BUT, I DECIDED NOT TO REMOVE THE CHAIN IDS. 
 
 # Make an Amber topology
 sed -e "s!#{INPUT}!p4a.pdb!g" \
