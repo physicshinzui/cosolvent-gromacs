@@ -17,9 +17,11 @@ FF=ff14SB
 tp=xe
 Mconc=0.1 # Molar [mol/L]
 
-# Create Amber topology and coordinate files
+# Histidine states assignment
+python scripts/generate_pdb_with_assigned_his.py $PDB
 
-pdb4amber -i $PDB --noter --dry -o p4a.pdb 
+# Create Amber topology and coordinate files
+pdb4amber -i assigned_his.pdb --noter --dry -o p4a.pdb 
 # NOTE: 
 # pdb4amber detects SS bonds automatically, the info being placed at the bottom of p4a.pdb as CONECT lines.
 # --noter and --dry are required to generate a PDB  
