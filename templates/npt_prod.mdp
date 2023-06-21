@@ -2,7 +2,7 @@ title      = NPT production
 
 ; Run parameters
 integrator = md  
-nsteps     = 50000000 ; 2 * 50000 = 100 ps
+nsteps     = 25000000  ; 2 * 50000 = 100 ps
 dt         = 0.002     ; 0.002 = 2 fs
 
 ; Output control
