@@ -13,7 +13,7 @@ def read_his_state(filename):
         hisname_amber = line.split()[2]
         resi = int(line.split()[3])
         if resi in dict_resi_w_hisname.keys():
-            sys.exit(f"$resi has already been included in keys.{dict_resi_w_hisname.keys()}")
+            sys.exit(f"{resi} has already been included in keys.{dict_resi_w_hisname.keys()}")
         dict_resi_w_hisname[resi] = hisname_amber
     return dict_resi_w_hisname
 
