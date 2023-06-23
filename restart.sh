@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -l select=1:ncpus=16:mpiprocs=2:ompthreads=2:ngpus=1
-#PBS -l walltime=00:30:00
+#PBS -l walltime=5:00:00
 
 #===========Preamble=============
 if [ ! -z "${PBS_O_WORKDIR}" ]; then
@@ -19,14 +19,12 @@ module -s load gromacs/2022.4-CUDA
 #==============================
 
 set -eu
-id=xe
-tpr=npt_prod_xe.tpr
-cpt=npt_prod_xe.cpt
-gmx mdrun -deffnm npt_prod_$id -s $tpr -cpi $cpt
+tpr=npt_prod_$id.tpr
+cpt=npt_prod_$id.cpt
+# jsub -v id=1 restart.sh
 
 #==== If the simulation described by tpr file has completed and should be extended, then
-#timetoextendby=5000 #ps
-#gmx convert-tpr -s previous.tpr -extend timetoextendby -o next.tpr
-#gmx mdrun -s next.tpr -cpi state.cpt
+gmx convert-tpr -s $tpr -until 50000 -o ${tpr}
+gmx mdrun -deffnm npt_prod_$id -s $tpr -cpi $cpt
 
 #cf. https://manual.gromacs.org/current/user-guide/managing-simulations.html
